@@ -18,7 +18,8 @@ namespace PlataformaBlogsPersonales.Model.Models
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public string Slug { get; set; }
-        public ICollection<Articulo> Articulos { get; set; }
+        //public Guid IdArticulo { get; set; }
+        public ICollection<ArticuloEtiqueta> ArticuloEtiquetas { get; set; }
 
     }
 }
