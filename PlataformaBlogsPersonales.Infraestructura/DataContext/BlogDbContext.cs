@@ -15,6 +15,7 @@ public class BlogDbContext(DbContextOptions<BlogDbContext> options) : DbContext(
         modelBuilder.ApplyConfiguration(new ArticuloConfiguracion());
         modelBuilder.ApplyConfiguration(new ArticuloEtiquetaConfigutacion());
         modelBuilder.ApplyConfiguration(new CategoriaConfiguracion());
+        modelBuilder.ApplyConfiguration(new EntiquetaConfiguracion());
 
         base.OnModelCreating(modelBuilder);
     }
