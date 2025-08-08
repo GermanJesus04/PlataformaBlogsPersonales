@@ -1,21 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using PlataformaBlogsPersonales.Infraestructura.DataContext;
 using PlataformaBlogsPersonales.Infraestructura.Servicios.Interfaces;
 using PlataformaBlogsPersonales.Model.DTOs.ArticuloDTOs;
 using PlataformaBlogsPersonales.Model.Models;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace PlataformaBlogsPersonales.Infraestructura.Servicios
 {
     public class ArticuloServicios : IArticuloServicios
     {
         private readonly BlogDbContext _context;
-        public ArticuloServicios(BlogDbContext context)
+        private readonly IMapper _mapper;
+        public ArticuloServicios(BlogDbContext context, IMapper mapper)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        //Devuelve una lista de artículos. agregar filtros como fecha o etiquetas.
         public async Task<List<Articulo>> ListaArticulos(FiltroArticuloDTO filtro)
         {
             try
@@ -44,13 +45,12 @@ namespace PlataformaBlogsPersonales.Infraestructura.Servicios
             }
         }
 
-        //Devuelve un solo artículo, especificado por el ID del artículo.
         public async Task<Articulo> ObtenerArticuloPorId(Guid id)
         {
             try
             {
                 var resul = await _context.Articulos
-                    .Include(e => e.Categorias)
+                    .Include(e => e.Categoria)
                     .Include(e => e.ArticuloEtiquetas)
                     .ThenInclude(e => e.Etiqueta)
                     .FirstOrDefaultAsync(a => a.Id == id);
@@ -63,23 +63,22 @@ namespace PlataformaBlogsPersonales.Infraestructura.Servicios
                 throw new Exception($"Error al obtener el artículo con ID {id}", ex);
             }
         }
-
-        //Crea un nuevo artículo para ser publicado.
-        public async Task CrearArticulo(Articulo articulo)
+         
+        public async Task<bool> CrearArticulo(ArticuloDTO articulodto)
         {
             try
             {
+                var articulo = _mapper.Map<Articulo>(articulodto);
                 _context.Articulos.Add(articulo);
-                await _context.SaveChangesAsync();
+                var result = await _context.SaveChangesAsync();
+                return result > 0; 
             }
             catch (Exception ex)
             {
-                // Aquí podrías registrar el error o manejarlo de alguna manera
                 throw new Exception("Error al crear el artículo", ex);
             }
         }
-        
-        //Eliminar un solo artículo, especificado por el ID.
+         
         public async Task EliminarArticulo(Guid id)
         {
             try
@@ -99,7 +98,6 @@ namespace PlataformaBlogsPersonales.Infraestructura.Servicios
             }
         }
 
-        //Actualice un solo artículo; nuevamente, especificará el artículo usando su ID.
         public async Task ActualizarArticulo(Guid id, Articulo articuloActualizado)
         {
             try
@@ -113,7 +111,7 @@ namespace PlataformaBlogsPersonales.Infraestructura.Servicios
                 articulo.Titulo = articuloActualizado.Titulo;
                 articulo.Contenido = articuloActualizado.Contenido;
                 articulo.FechaCreacion = articuloActualizado.FechaCreacion;
-                articulo.Categorias = articuloActualizado.Categorias;
+                articulo.Categoria = articuloActualizado.Categoria;
                 articulo.ArticuloEtiquetas = articuloActualizado.ArticuloEtiquetas;
                 _context.Articulos.Update(articulo);
                 await _context.SaveChangesAsync();

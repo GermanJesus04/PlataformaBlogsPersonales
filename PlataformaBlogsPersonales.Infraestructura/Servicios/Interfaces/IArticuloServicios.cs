@@ -12,7 +12,7 @@ namespace PlataformaBlogsPersonales.Infraestructura.Servicios.Interfaces
     {
         public Task<List<Articulo>> ListaArticulos(FiltroArticuloDTO filtro);
         public Task<Articulo> ObtenerArticuloPorId(Guid id);
-        public Task CrearArticulo(Articulo articulo);
+        public Task<bool> CrearArticulo(ArticuloDTO articulo);
         public Task EliminarArticulo(Guid id);
         public Task ActualizarArticulo(Guid id, Articulo articuloActualizado);
     }

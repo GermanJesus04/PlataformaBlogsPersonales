@@ -1,5 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 using PlataformaBlogsPersonales.Infraestructura.DataContext;
+using PlataformaBlogsPersonales.Infraestructura.Servicios;
+using PlataformaBlogsPersonales.Infraestructura.Servicios.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
+using PlataformaBlogsPersonales.Infraestructura.Mapeos;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +14,14 @@ var conectionConfig = builder.Configuration.GetConnectionString(NombreConection)
 
 builder.Services.AddDbContext<BlogDbContext>(options =>
     options.UseSqlServer(conectionConfig));
+
+
+builder.Services.AddAutoMapper(cfg =>
+    cfg.AddMaps(AppDomain.CurrentDomain.GetAssemblies()));
+
+// inyeccion de dependencias de los servicios
+builder.Services.AddScoped<IArticuloServicios, ArticuloServicios>();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
