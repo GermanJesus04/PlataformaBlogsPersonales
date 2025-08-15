@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using PlataformaBlogsPersonales.Infraestructura.DataContext;
+using PlataformaBlogsPersonales.Model.DTOs.CategoriaDTOs;
 using PlataformaBlogsPersonales.Model.Models;
 
 namespace PlataformaBlogsPersonales.Infraestructura.Servicios
@@ -41,12 +42,14 @@ namespace PlataformaBlogsPersonales.Infraestructura.Servicios
             }
         }
 
-        public async Task<Categoria> CrearCategoria(Categoria categoria)
+        public async Task<Categoria> CrearCategoria(CategoriaDTO categoriaDto)
         {
             try
             {
-                if (categoria == null)
-                    throw new ArgumentNullException(nameof(categoria), "La categoría no puede ser nula.");
+                if (categoriaDto == null)
+                    throw new ArgumentNullException(nameof(categoriaDto), "La categoría no puede ser nula.");
+
+                var categoria = _mapper.Map<Categoria>(categoriaDto);
                 _context.Categorias.Add(categoria);
                 await _context.SaveChangesAsync();
                 return categoria;
