@@ -36,7 +36,9 @@ namespace PlataformaBlogsPersonales.Infraestructura.Servicios
                 }
 
 
+
                 return await query.ToListAsync();
+
             } catch (Exception ex)
             {
                 // Aquí podrías registrar el error o manejarlo de alguna manera

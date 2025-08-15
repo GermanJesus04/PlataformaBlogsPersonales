@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PlataformaBlogsPersonales.Infraestructura.Migrations
 {
     /// <inheritdoc />
-    public partial class MigracionInicial : Migration
+    public partial class migracionInicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,7 +19,6 @@ namespace PlataformaBlogsPersonales.Infraestructura.Migrations
                     NOMBRE = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     DESCRIPCION = table.Column<string>(type: "nvarchar(350)", maxLength: 350, nullable: true),
                     SLUG = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
-                    IdArticulo = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FECHA_CREACION = table.Column<DateTime>(type: "datetime2", nullable: false),
                     USUARIO_CREACION = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     FECHA_ACTUALIZACION = table.Column<DateTime>(type: "datetime2", nullable: true),

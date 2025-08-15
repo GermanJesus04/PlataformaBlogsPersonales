@@ -13,9 +13,8 @@ namespace PlataformaBlogsPersonales.Model.DTOs.ArticuloDTOs
         public string Contenido { get; set; }
         public string Resumen { get; set; }
         public string Autor { get; set; }
-        public ICollection<ArticuloEtiqueta> ArticuloEtiquetas { get; set; }
+        public List<string> Etiquetas { get; set; } = new();
         public Guid IdCategoria { get; set; }
-        public Categoria Categoria { get; set; }
         public EstadoArticulo Estado { get; set; }
         public string? SlugImagen { get; set; }
         public int NumeroVisitas { get; set; }

@@ -12,8 +12,8 @@ using PlataformaBlogsPersonales.Infraestructura.DataContext;
 namespace PlataformaBlogsPersonales.Infraestructura.Migrations
 {
     [DbContext(typeof(BlogDbContext))]
-    [Migration("20250802192155_MigracionInicial")]
-    partial class MigracionInicial
+    [Migration("20250815210646_migracionInicial")]
+    partial class migracionInicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -164,9 +164,6 @@ namespace PlataformaBlogsPersonales.Infraestructura.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("FECHA_ELIMINACION");
 
-                    b.Property<Guid>("IdArticulo")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -271,13 +268,13 @@ namespace PlataformaBlogsPersonales.Infraestructura.Migrations
 
             modelBuilder.Entity("PlataformaBlogsPersonales.Model.Models.Articulo", b =>
                 {
-                    b.HasOne("PlataformaBlogsPersonales.Model.Models.Categoria", "Categorias")
+                    b.HasOne("PlataformaBlogsPersonales.Model.Models.Categoria", "Categoria")
                         .WithMany("Articulos")
                         .HasForeignKey("IdCategoria")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Categorias");
+                    b.Navigation("Categoria");
                 });
 
             modelBuilder.Entity("PlataformaBlogsPersonales.Model.Models.ArticuloEtiqueta", b =>

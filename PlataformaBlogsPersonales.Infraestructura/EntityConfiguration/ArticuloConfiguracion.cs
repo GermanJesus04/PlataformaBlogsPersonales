@@ -55,7 +55,7 @@ public class ArticuloConfiguracion : IEntityTypeConfiguration<Articulo>
 
 
         //Modelo Entidad - Relacion
-        builder.HasOne(a => a.Categorias)
+        builder.HasOne(a => a.Categoria)
             .WithMany()
             .HasForeignKey(a => a.IdCategoria)
             .OnDelete(DeleteBehavior.Cascade);

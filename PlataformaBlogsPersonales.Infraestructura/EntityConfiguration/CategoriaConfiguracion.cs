@@ -27,7 +27,7 @@ namespace PlataformaBlogsPersonales.Infraestructura.EntityConfiguration
 
             // Modelo Entidad - Relacion
             builder.HasMany(c => c.Articulos)
-                .WithOne(a => a.Categorias)
+                .WithOne(a => a.Categoria)
                 .HasForeignKey(a => a.IdCategoria)
                 .OnDelete(DeleteBehavior.Cascade);
         }

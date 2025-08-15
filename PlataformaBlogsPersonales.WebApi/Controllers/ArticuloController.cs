@@ -6,10 +6,11 @@ using PlataformaBlogsPersonales.Model.Models;
 
 namespace PlataformaBlogsPersonales.WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ArticuloController : ControllerBase
     {
+        
         private readonly IArticuloServicios _articuloServicios;
         
         public ArticuloController(IArticuloServicios articuloServicios)
